@@ -21,7 +21,7 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         buildContext: '.'
-        tags: $(Build.Id)
+        tags: $(Build.BuildId)
         addPipelineData: false
 
     - task: SSH@0
@@ -29,5 +29,5 @@ stages:
       inputs:
         sshEndpoint: 'aliyun 47.102.201.58'
         runOptions: 'inline'
-        inline: 'kubectl set image deploy/tocgenerator tocgenerator=$(dockerid)/tocgenerator:$(Build.Id)'
+        inline: 'kubectl set image deploy/tocgenerator tocgenerator=$(dockerid)/tocgenerator:$(Build.BuildId)'
         readyTimeout: '20000'
