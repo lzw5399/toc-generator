@@ -14,10 +14,10 @@
       <None Update="Scripts\a.py">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Scripts\run.sh">
+      <None Update="Scripts\run-osx.sh">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Scripts\python3">
+      <None Update="Scripts\python3-osx">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

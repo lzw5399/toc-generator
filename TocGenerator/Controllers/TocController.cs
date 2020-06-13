@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Mvc;
 using TocGenerator.Extensions;
 
@@ -39,7 +40,20 @@ namespace TocGenerator.Controllers
                     fs.Close();
                 }
 
-                "bash ./run.sh".Bash(path);
+                // 懒得写支持window的了
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    "bash ./run-linux.sh".Bash(path);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    "bash ./run-osx.sh".Bash(path);
+                }
+                else
+                {
+                    throw new NotSupportedException("cannot support current OS!");
+                }
+
 
                 string result;
                 // 读取转换之后的
@@ -65,7 +79,7 @@ namespace TocGenerator.Controllers
             var tempFiles = directoryInfo.GetFiles("*.md");
 
             if (!tempFiles.Any()) return;
-            
+
             lock (_locker)
             {
                 foreach (var file in tempFiles)

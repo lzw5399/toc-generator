@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM python:3.6.4
 WORKDIR /app
 EXPOSE 80
 
