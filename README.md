@@ -2,7 +2,8 @@
 
 Due to github does not support adding `[TOC]` at the beginning of markdown to add directories, it's a bit inconvenient, so there is this gadget **TocGenerator**
 
-## reference
+## Reference
+
 The core module uses [GitToc](https://github.com/Holy-Shine/GitToc), welcome star him
 
 ## Usage
@@ -13,7 +14,7 @@ The core module uses [GitToc](https://github.com/Holy-Shine/GitToc), welcome sta
 
 ### 2. Docker
 
-```
+```[shell]
 docker run -d -p 8087:80 lzw5399/tocgenerator
 ```
 
