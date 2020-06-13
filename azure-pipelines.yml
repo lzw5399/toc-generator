@@ -23,8 +23,9 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'my_docker_hub'
-        repository: 'TocGenerator'
+        repository: 'lzw5399TocGenerator'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         buildContext: '.'
+        tags: 'latest'
         addPipelineData: false
