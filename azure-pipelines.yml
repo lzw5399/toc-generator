@@ -14,11 +14,20 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
+      displayName: docker build and push
       inputs:
         containerRegistry: 'my_docker_hub'
         repository: '$(dockerid)/TocGenerator'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         buildContext: '.'
-        tags: 'latest'
+        tags: $(Build.Id)
         addPipelineData: false
+
+    - task: SSH@0
+      displayName: update k8s application image
+      inputs:
+        sshEndpoint: 'aliyun 47.102.201.58'
+        runOptions: 'inline'
+        inline: 'kubectl set image deploy/tocgenerator tocgenerator=$(dockerid)/tocgenerator:$(Build.Id)'
+        readyTimeout: '20000'
