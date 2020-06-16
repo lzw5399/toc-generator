@@ -10,7 +10,7 @@ The core module uses [GitToc](https://github.com/Holy-Shine/GitToc), welcome sta
 
 ### 1. Use online
 
-> [tocgenarator](https://github.com/lzw5399/TocGenerator)
+> [tocgenarator](http://47.100.220.174:30075)
 
 ### 2. Docker
 
