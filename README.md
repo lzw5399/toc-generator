@@ -14,8 +14,8 @@ The core module uses [GitToc](https://github.com/Holy-Shine/GitToc), welcome sta
 
 ### 2. Docker
 
-```[shell]
-docker run -d -p 8087:80 lzw5399/tocgenerator
+```shell
+docker run --rm -p 8087:80 lzw5399/tocgenerator
 ```
 
 ### 3. Build from source
