@@ -40,7 +40,7 @@
 
     <script>
     $("#btnConvert").click(function() {
-      $("#output").val('转换中请稍后...')
+      $("#output").val('Please wait while converting...')
       $.ajax({
           type : "POST",
           dataType: "json",
@@ -51,7 +51,7 @@
               $("#output").val(result);
           },
           error : function(e){
-              $("#output").val('连接超时请重试。。。');
+              $("#output").val('Ouch, connection timed out please try again。。。');
           }
       });
     })
