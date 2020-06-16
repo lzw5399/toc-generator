@@ -1,4 +1,6 @@
-﻿# Foreword
+﻿[![Build Status](https://dev.azure.com/Zhiwen-Lin/Codepie/_apis/build/status/lzw5399.TocGenerator?branchName=master)](https://dev.azure.com/Zhiwen-Lin/Codepie/_build/latest?definitionId=27&branchName=master)
+ 
+ # Foreword
 
 Due to github does not support adding `[TOC]` at the beginning of markdown to add directories, it's a bit inconvenient, so there is this gadget **TocGenerator**
 
