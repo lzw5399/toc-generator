@@ -11,16 +11,10 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
-      <None Update="Scripts\a.py">
+      <None Update="Scripts\converter.py">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Scripts\run-osx.sh">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Scripts\python3-osx">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Scripts\run-linux.sh">
+      <None Update="Scripts\run.sh">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
@@ -31,6 +25,12 @@
       <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="Scripts\Python-3.8.3\Modules\_xxtestfuzz\fuzz_json_loads_corpus\empty_array.json" />
+      <_ContentIncludedByDefault Remove="Scripts\Python-3.8.3\Modules\_xxtestfuzz\fuzz_json_loads_corpus\empty_object.json" />
+      <_ContentIncludedByDefault Remove="Scripts\Python-3.8.3\Modules\_xxtestfuzz\fuzz_json_loads_corpus\pass1.json" />
+      <_ContentIncludedByDefault Remove="Scripts\Python-3.8.3\Modules\_xxtestfuzz\fuzz_json_loads_corpus\pass2.json" />
+      <_ContentIncludedByDefault Remove="Scripts\Python-3.8.3\Modules\_xxtestfuzz\fuzz_json_loads_corpus\pass3.json" />
+      <_ContentIncludedByDefault Remove="Scripts\Python-3.8.3\Modules\_xxtestfuzz\fuzz_json_loads_corpus\simple_array.json" />
     </ItemGroup>
 
 </Project>

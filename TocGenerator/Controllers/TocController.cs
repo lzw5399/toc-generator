@@ -40,20 +40,7 @@ namespace TocGenerator.Controllers
                     fs.Close();
                 }
 
-                // 懒得写支持window的了
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    "bash ./run-linux.sh".Bash(path);
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    "bash ./run-osx.sh".Bash(path);
-                }
-                else
-                {
-                    throw new NotSupportedException("cannot support current OS!");
-                }
-
+                "bash ./run.sh".Bash(path);
 
                 string result;
                 // 读取转换之后的
