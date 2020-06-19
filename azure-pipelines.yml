@@ -4,6 +4,19 @@ trigger:
 resources:
 - repo: self
 
+variables:
+- name: appName
+  value: tocgenerator
+
+- name: tag
+  value: $(Build.BuildId)
+
+- name: imageNameWithoutTag
+  value: $(dockerid)/$(appName)
+
+- name: imageNameWithTag
+  value: $(imageNameWithoutTag):$(tag)
+
 stages:
 - stage: Build
   displayName: Build image
@@ -17,17 +30,25 @@ stages:
       displayName: docker build and push
       inputs:
         containerRegistry: 'my_docker_hub'
-        repository: '$(dockerid)/TocGenerator'
+        repository: '$(imageNameWithoutTag)'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         buildContext: '.'
-        tags: $(Build.BuildId)
+        tags: $(tag)
         addPipelineData: false
+
+    - task: Bash@3
+      displayName: tag image as latest and push
+      inputs:
+        targetType: 'inline'
+        script: |
+          docker tag $(imageNameWithTag) $(imageNameWithoutTag):latest
+          docker push $(imageNameWithoutTag):latest
 
     - task: SSH@0
       displayName: update k8s application image
       inputs:
         sshEndpoint: 'aliyun 47.102.201.58'
         runOptions: 'inline'
-        inline: 'kubectl set image deploy/tocgenerator tocgenerator=$(dockerid)/tocgenerator:$(Build.BuildId)'
+        inline: 'kubectl set image deploy/$(appName) $(appName)=$(imageNameWithTag)'
         readyTimeout: '20000'
