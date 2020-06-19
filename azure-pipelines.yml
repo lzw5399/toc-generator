@@ -43,7 +43,15 @@ stages:
         targetType: 'inline'
         script: |
           docker tag $(imageNameWithTag) $(imageNameWithoutTag):latest
-          docker push $(imageNameWithoutTag):latest
+
+    - task: Docker@2
+      displayName: push latest tagged image
+      inputs:
+        containerRegistry: 'my_docker_hub'
+        repository: $(imageNameWithoutTag)
+        command: 'push'
+        tags: 'latest'
+        addPipelineData: false
 
     - task: SSH@0
       displayName: update k8s application image
