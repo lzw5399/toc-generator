@@ -12,7 +12,7 @@ The core module uses [GitToc](https://github.com/Holy-Shine/GitToc), welcome to 
 
 ### 1. Use online
 
-> [tocgenarator](http://47.100.220.174:30075)
+> [tocgenarator](https://toc.codepie.fun)
 
 ### 2. Docker
 
