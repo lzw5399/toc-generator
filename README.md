@@ -1,4 +1,6 @@
 ﻿[![Build Status](https://dev.azure.com/Zhiwen-Lin/Codepie/_apis/build/status/lzw5399.TocGenerator?branchName=master)](https://dev.azure.com/Zhiwen-Lin/Codepie/_build/latest?definitionId=27&branchName=master)
+ [![HitCount](http://hits.dwyl.com/lzw5399/tocgenerator.svg)](http://hits.dwyl.com/lzw5399/tocgenerator)
+
  
  # Foreword
 
