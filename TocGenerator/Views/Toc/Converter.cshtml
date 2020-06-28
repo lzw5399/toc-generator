@@ -41,6 +41,8 @@
     <script>
     $("#btnConvert").click(function() {
       $("#output").val('Please wait while converting...')
+      $('#btnConvert').attr({"disabled":"disabled"})
+      
       $.ajax({
           type : "POST",
           dataType: "json",
@@ -49,9 +51,11 @@
           data : JSON.stringify($("#input").val()),
           success : function(result) {
               $("#output").val(result);
+              $('#btnConvert').removeAttr('disabled')
           },
           error : function(e){
               $("#output").val('Ouch, connection timed out please try again。。。');
+              $('#btnConvert').removeAttr('disabled')
           }
       });
     })
