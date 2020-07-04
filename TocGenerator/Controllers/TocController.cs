@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TocGenerator.Extensions;
 
 namespace TocGenerator.Controllers
 {
@@ -29,6 +28,7 @@ namespace TocGenerator.Controllers
             { 5, -1 },
             { 6, -1 }
         };
+        private readonly string[] _unorderedList = new string[] { "- ", "+ ", "* " };
 
         public IActionResult Converter()
         {
@@ -47,6 +47,7 @@ namespace TocGenerator.Controllers
 
             using (var sr = new StringReader(text))
             {
+                var isUnorderedlist = false;
                 string line;
                 while ((line = await sr.ReadLineAsync()) != null)
                 {
@@ -56,12 +57,15 @@ namespace TocGenerator.Controllers
                     if (line.Length >= 3 && line.Substring(0, 3) == "```")
                         iscode = !iscode;
 
-                    if (!iscode)
+                    if (line.TrimStart().Length >= 2 && _unorderedList.Contains(line.TrimStart().Substring(0, 2)))
+                        isUnorderedlist = true;
+
+                    if (!iscode && !isUnorderedlist)
                         line = line.TrimStart();
 
                     var ls = line.Split(' ');
 
-                    if (ls.Length > 1 && _headlineDic.Keys.Contains(ls[0]) && !iscode)
+                    if (ls.Length > 1 && _headlineDic.Keys.Contains(ls[0]) && !iscode && !isUnorderedlist)
                     {
                         headlineCounter += 1;
                         currentStatus = _headlineDic[ls[0]];
@@ -110,7 +114,7 @@ namespace TocGenerator.Controllers
                     }
                     else
                     {
-                        orgStr.Append(line);
+                        orgStr.AppendLine(line);
                     }
                 }
             }
