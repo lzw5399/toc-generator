@@ -11,7 +11,6 @@ namespace TocGenerator.Controllers
 {
     public class TocController : Controller
     {
-        private readonly object _locker = new object();
         private readonly Dictionary<string, int> _headlineDic = new Dictionary<string, int>
         {
             { "#", 0 },
@@ -31,59 +30,16 @@ namespace TocGenerator.Controllers
             { 6, -1 }
         };
 
-        // GET
         public IActionResult Converter()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ConverterPy([FromBody] string text)
-        {
-            try
-            {
-                // 删除toc
-                if (text.StartsWith("[TOC]"))
-                {
-                    text = text.Substring(5);
-                }
-
-                var path = Path.Combine(AppContext.BaseDirectory, "Scripts");
-                DeleteMarkdowns(path);
-
-                using (var fs = new FileStream(Path.Combine(path, "temp.md"), FileMode.Create))
-                {
-                    byte[] bytes = System.Text.Encoding.Default.GetBytes(text);
-                    fs.Write(bytes, 0, bytes.Length);
-                    fs.Flush();
-                    fs.Close();
-                }
-
-                "bash ./run.sh".Bash(path);
-
-                string result;
-                // 读取转换之后的
-                using (var sr = new StreamReader(Path.Combine(path, "temp_with_toc.md")))
-                {
-                    result = sr.ReadToEnd();
-                    sr.Close();
-                }
-
-                DeleteMarkdowns(path);
-
-                return Json(result);
-            }
-            catch (Exception e)
-            {
-                return Json("转换失败，请检查输入markdown本身");
-            }
-        }
-
-        [HttpPost]
         public async Task<ActionResult> Converter([FromBody] string text)
         {
-            var insertStr = string.Empty;
-            var orgStr = string.Empty;
+            var insertStr = new StringBuilder();
+            var orgStr = new StringBuilder();
             var lastStatus = -1;
             var currentStatus = -1;
             var headlineCounter = 0;
@@ -94,6 +50,9 @@ namespace TocGenerator.Controllers
                 string line;
                 while ((line = await sr.ReadLineAsync()) != null)
                 {
+                    if (line.Trim() == "[TOC]")
+                        line = string.Empty;
+
                     if (line.Length >= 3 && line.Substring(0, 3) == "```")
                         iscode = !iscode;
 
@@ -132,7 +91,7 @@ namespace TocGenerator.Controllers
 
                         var headid = $"head{headlineCounter}";
                         var headline = $"{ls[0]} <span id=\"{headid}\">{headtext}</span>\n";
-                        orgStr += headline;
+                        orgStr.Append(headline);
 
                         var jumpStr = $"- [{headtext}](#head{headlineCounter})";
 
@@ -145,34 +104,18 @@ namespace TocGenerator.Controllers
                             }
                         }
 
-                        insertStr += (tempp + jumpStr + "\n");
+                        insertStr.Append(tempp + jumpStr + "\n");
 
                         lastStatus = currentStatus;
                     }
                     else
                     {
-                        orgStr += line;
+                        orgStr.Append(line);
                     }
                 }
             }
 
-            return Json(insertStr + orgStr);
-        }
-
-        private void DeleteMarkdowns(string path)
-        {
-            var directoryInfo = new DirectoryInfo(path);
-            var tempFiles = directoryInfo.GetFiles("*.md");
-
-            if (!tempFiles.Any()) return;
-
-            lock (_locker)
-            {
-                foreach (var file in tempFiles)
-                {
-                    file.Delete();
-                }
-            }
+            return Json(insertStr.ToString() + orgStr.ToString());
         }
     }
 }

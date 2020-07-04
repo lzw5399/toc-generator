@@ -18,7 +18,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# install python3 dependency
-RUN apt-get update && apt-get install software-properties-common -y
-
 ENTRYPOINT ["dotnet", "TocGenerator.dll"]
