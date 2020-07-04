@@ -8,7 +8,7 @@ Due to github does not support adding `[TOC]` at the beginning of markdown to ad
 
 ## Reference
 
-The core module uses [GitToc](https://github.com/Holy-Shine/GitToc), welcome to star him
+The core logic references [GitToc](https://github.com/Holy-Shine/GitToc), welcome to star him
 
 ## Usage
 
