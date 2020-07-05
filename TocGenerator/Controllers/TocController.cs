@@ -121,5 +121,11 @@ namespace TocGenerator.Controllers
 
             return Json(insertStr.ToString() + orgStr.ToString());
         }
+
+        [HttpGet]
+        public ActionResult Health()
+        {
+            return Content("ok");
+        }
     }
 }
