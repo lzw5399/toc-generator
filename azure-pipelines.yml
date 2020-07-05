@@ -58,5 +58,5 @@ stages:
       inputs:
         sshEndpoint: 'aliyun 47.102.201.58'
         runOptions: 'inline'
-        inline: 'kubectl set image deploy/$(appName) $(appName)=$(imageNameWithTag)'
+        inline: 'kubectl set image deploy/tocgenerator-deploy $(appName)=$(imageNameWithTag)'
         readyTimeout: '20000'
