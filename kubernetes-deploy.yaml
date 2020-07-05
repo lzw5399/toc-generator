@@ -30,17 +30,17 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "100m"
-          readinessProbe:
-            tcpSocket:
-              port: 80
-            initialDelaySeconds: 60
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /toc/health
-              port: 80
-            initialDelaySeconds: 60
-            periodSeconds: 60
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 80
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          # livenessProbe:
+          #   httpGet:
+          #     path: /toc/health
+          #     port: 80
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 60
           ports:
             - containerPort: 80
 
