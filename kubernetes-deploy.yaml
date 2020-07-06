@@ -58,3 +58,23 @@ spec:
     port: 80
     targetPort: 80
     nodePort: 30075
+
+# ingress暂时用不了
+# ---
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   name: tocgenerator-ingress
+# spec:
+#   tls:
+#     - hosts:
+#       - toc.codepie.fun
+#       secretName: toc-secret
+#   rules:
+#     - host: toc.codepie.fun
+#       http:
+#         paths:
+#           - path: /
+#             backend:
+#               serviceName: tocgenerator-svc
+#               servicePort: 80
