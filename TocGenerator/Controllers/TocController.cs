@@ -44,10 +44,10 @@ namespace TocGenerator.Controllers
             var currentStatus = -1;
             var headlineCounter = 0;
             var iscode = false;
-
+            var isUnorderedlist = false;
+            
             using (var sr = new StringReader(text))
             {
-                var isUnorderedlist = false;
                 string line;
                 while ((line = await sr.ReadLineAsync()) != null)
                 {
@@ -116,6 +116,8 @@ namespace TocGenerator.Controllers
                     {
                         orgStr.AppendLine(line);
                     }
+
+                    isUnorderedlist = false;
                 }
             }
 
