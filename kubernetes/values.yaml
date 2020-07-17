@@ -10,4 +10,4 @@ ingress:
   secretname: toc-secret
 
 env:
-  buildnumber: no build number~
+  buildnumber: 'no build number'
