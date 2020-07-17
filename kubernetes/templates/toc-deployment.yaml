@@ -32,7 +32,7 @@ spec:
               cpu: "100m"
           env:
             - name: BUILD_NUMBER
-              value: {{ .Values.env.buildnumber }}
+              value: '{{ .Values.env.buildnumber }}'
           # readinessProbe:
           #   tcpSocket:
           #     port: 80
