@@ -9,13 +9,16 @@ variables:
   value: tocgenerator
 
 - name: tag
-  value: $(Build.BuildId)
+  value: $(Build.BuildNumber)
 
 - name: imageNameWithoutTag
   value: $(dockerid)/$(appName)
 
 - name: imageNameWithTag
   value: $(imageNameWithoutTag):$(tag)
+
+- name: serverChartLocation
+  value: /root/helm-chart-folder
 
 stages:
 - stage: Build
@@ -53,10 +56,29 @@ stages:
         tags: 'latest'
         addPipelineData: false
 
-    - task: SSH@0
-      displayName: update k8s application image
+
+    - task: CopyFilesOverSSH@0
+      displayName: copy helm chart to server
       inputs:
         sshEndpoint: 'aliyun 47.102.201.58'
-        runOptions: 'inline'
-        inline: 'kubectl set image deploy/tocgenerator-deploy $(appName)=$(imageNameWithTag)'
+        sourceFolder: 'kubernetes'
+        contents: '**'
+        targetFolder: '/root/helm-chart-folder'
         readyTimeout: '20000'
+  
+    - task: SSH@0
+      displayName: run deploy shell on server
+      inputs:
+        sshEndpoint: 'aliyun 47.102.201.58'
+        runOptions: 'script'
+        scriptPath: 'deploy.sh'
+        args: '$(tag) $(serverChartLocation)'
+        readyTimeout: '20000'
+
+    # - task: SSH@0
+    #   displayName: update k8s application image
+    #   inputs:
+    #     sshEndpoint: 'aliyun 47.102.201.58'
+    #     runOptions: 'inline'
+    #     inline: 'kubectl set image deploy/tocgenerator-deploy $(appName)=$(imageNameWithTag)'
+    #     readyTimeout: '20000'

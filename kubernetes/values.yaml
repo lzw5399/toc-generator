@@ -1,0 +1,13 @@
+spec:
+  replicas: 2
+
+image:
+  repository: lzw5399/tocgenerator
+  tag: 951
+
+ingress:
+  host: toc.codepie.fun
+  secretname: toc-secret
+
+env:
+  buildnumber: no build number~

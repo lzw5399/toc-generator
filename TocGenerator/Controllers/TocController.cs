@@ -124,10 +124,12 @@ namespace TocGenerator.Controllers
             return Json(insertStr.ToString() + orgStr.ToString());
         }
 
-        [HttpGet]
-        public ActionResult Health()
+        [HttpGet("version")]
+        public ActionResult Version()
         {
-            return Content("ok");
+            var buildNumber = Environment.GetEnvironmentVariable("BUILD_NUMBER") ?? "no build number avaliable";
+
+            return Content(buildNumber);
         }
     }
 }
