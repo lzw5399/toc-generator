@@ -63,7 +63,7 @@ stages:
         sshEndpoint: 'aliyun 47.102.201.58'
         sourceFolder: 'kubernetes'
         contents: '**'
-        targetFolder: '/root/helm-chart-folder'
+        targetFolder: $(serverChartLocation)
         readyTimeout: '20000'
   
     - task: SSH@0
