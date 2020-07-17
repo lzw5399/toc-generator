@@ -56,7 +56,6 @@ stages:
         tags: 'latest'
         addPipelineData: false
 
-
     - task: CopyFilesOverSSH@0
       displayName: copy helm chart to server
       inputs:
