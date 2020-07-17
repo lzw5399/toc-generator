@@ -18,7 +18,7 @@ variables:
   value: $(imageNameWithoutTag):$(tag)
 
 - name: serverChartLocation
-  value: /root/helm-chart-folder
+  value: /root/helm-chart-folder/toc
 
 stages:
 - stage: Build

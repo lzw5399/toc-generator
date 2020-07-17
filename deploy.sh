@@ -1,16 +1,16 @@
 # $1代表执行shell时外部传入的参数
-echo -e "\033[36m start deploying... \033[0m"
 buildNumber=$1
 serverChartLocation=$2
 cd $serverChartLocation
+echo -e "\033[36m start deploying, current buildNumber=$buildNumber \033[0m"
 
 # pull newest image
 echo -e "\033[36m step1: check whether toc-helm exists  \033[0m"
-tochelm=$(sudo helm ls | grep toc-release)
+tochelm=$(helm ls | grep toc-release)
 if test -n "$tochelm"; then
-  sudo helm install -f values.yaml --set env.buildnumber=$buildNumber toc-release .
+  helm install -f values.yaml --set env.buildnumber=$buildNumber toc-release .
 else
-  sudo helm upgrade -f values.yaml --set env.buildnumber=$buildNumber toc-release .
+  helm upgrade -f values.yaml --set env.buildnumber=$buildNumber toc-release .
 fi
 
 # remove dangling images
