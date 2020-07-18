@@ -11,11 +11,11 @@ variables:
 - name: tag
   value: $(Build.BuildNumber)
 
-- name: imageNameWithoutTag
+- name: repository
   value: $(dockerid)/$(appName)
 
 - name: imageNameWithTag
-  value: $(imageNameWithoutTag):$(tag)
+  value: $(repository):$(tag)
 
 - name: serverChartLocation
   value: /root/helm-chart-folder/toc
@@ -33,7 +33,7 @@ stages:
       displayName: docker build and push
       inputs:
         containerRegistry: 'my_docker_hub'
-        repository: '$(imageNameWithoutTag)'
+        repository: '$(repository)'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         buildContext: '.'
@@ -45,13 +45,13 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          docker tag $(imageNameWithTag) $(imageNameWithoutTag):latest
+          docker tag $(imageNameWithTag) $(repository):latest
 
     - task: Docker@2
       displayName: push latest tagged image
       inputs:
         containerRegistry: 'my_docker_hub'
-        repository: $(imageNameWithoutTag)
+        repository: $(repository)
         command: 'push'
         tags: 'latest'
         addPipelineData: false
