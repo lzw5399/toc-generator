@@ -10,6 +10,7 @@ namespace TocGenerator.Controllers
 {
     public class TocController : Controller
     {
+        private static Guid uuid = Guid.NewGuid();
         private readonly Dictionary<string, int> _headlineDic = new Dictionary<string, int>
         {
             { "#", 0 },
@@ -128,8 +129,9 @@ namespace TocGenerator.Controllers
         public ActionResult Version()
         {
             var buildNumber = Environment.GetEnvironmentVariable("BUILD_NUMBER") ?? "no build number avaliable";
+            var content = $"buildNumber: {buildNumber}{Environment.NewLine}uuid: {uuid}";
 
-            return Content(buildNumber);
+            return Content(content);
         }
     }
 }
