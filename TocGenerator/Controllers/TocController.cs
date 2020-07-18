@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TocGenerator.Controllers
 {
     public class TocController : Controller
     {
+        private readonly ILogger<TocController> _logger;
         private static Guid uuid = Guid.NewGuid();
         private readonly Dictionary<string, int> _headlineDic = new Dictionary<string, int>
         {
@@ -31,6 +33,11 @@ namespace TocGenerator.Controllers
         };
         private readonly string[] _unorderedList = new string[] { "- ", "+ ", "* " };
 
+        public TocController(ILogger<TocController> logger)
+        {
+            _logger = logger;
+        }
+        
         public IActionResult Converter()
         {
             return View();
@@ -128,6 +135,7 @@ namespace TocGenerator.Controllers
         [HttpGet("version")]
         public ActionResult Version()
         {
+            _logger.LogInformation($"request hit, current uuid: {uuid}");
             var buildNumber = Environment.GetEnvironmentVariable("BUILD_NUMBER") ?? "no build number avaliable";
             var content = $"buildNumber: {buildNumber}{Environment.NewLine}uuid: {uuid}";
 
