@@ -12,7 +12,7 @@ echo -e "\033[32m log: current serverChartLocation=$serverChartLocation \033[0m"
 # install or upgrade helm release
 echo -e "\033[36m step1: check whether toc-helm exists  \033[0m"
 if test -z "$(helm ls | grep toc-release)"; then
-  echo -e "\033[32m log: current already exist toc-release, will upgrade it \033[0m"
+  echo -e "\033[32m log: current doesn't exist toc-release, will install one\033[0m"
   helm install -f values.yaml --set env.buildnumber=$buildNumber --set image.tag=$buildNumber toc-release .
 else
   echo -e "\033[32m log: current already exist toc-release, will upgrade it \033[0m"
