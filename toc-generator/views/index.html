@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Markdown TOC generator</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <style type="text/css">
+        .container {
+            display: flex;
+            align-items: flex-start;
+        }
+        .left {
+            flex: none;
+            width: 46%;
+            height: 600px;
+            resize: none;
+        }
+        .right {
+            flex: auto;
+            width: 46%;
+            height: 600px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h2 style="text-align: center">Markdown TOC generator</h2>
+    <div id="container">
+        <textarea id="input" class="left"></textarea>
+        <input type="button" id="btnConvert" value="convert"/>
+        <textarea id="output" readonly="readonly" class="right"></textarea>
+    </div>
+
+    <script>
+        $("#btnConvert").click(function() {
+            $("#output").val('Please wait while converting...')
+            $('#btnConvert').attr({"disabled":"disabled"})
+
+            $.ajax({
+                type : "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url : '/convert',
+                data : JSON.stringify($("#input").val()),
+                success : function(result) {
+                    $("#output").val(result);
+                    $('#btnConvert').removeAttr('disabled')
+                },
+                error : function(e){
+                    $("#output").val('Ouch, connection timed out please try again。。。');
+                    $('#btnConvert').removeAttr('disabled')
+                }
+            });
+        })
+    </script>
+</div>
+</body>
+</html>
