@@ -1,5 +1,5 @@
-﻿[![Build Status](https://dev.azure.com/Zhiwen-Lin/Codepie/_apis/build/status/lzw5399.TocGenerator?branchName=master)](https://dev.azure.com/Zhiwen-Lin/Codepie/_build/latest?definitionId=27&branchName=master)
- [![HitCount](http://hits.dwyl.com/lzw5399/tocgenerator.svg)](http://hits.dwyl.com/lzw5399/tocgenerator)
+﻿[![Build Status](https://dev.azure.com/Zhiwen-Lin/Codepie/_apis/build/status/toc-generator?branchName=master)](https://dev.azure.com/Zhiwen-Lin/Codepie/_build/latest?definitionId=28&branchName=master)
+[![HitCount](http://hits.dwyl.com/lzw5399/tocgenerator.svg)](http://hits.dwyl.com/lzw5399/tocgenerator)
 
  
  # Foreword
@@ -14,7 +14,7 @@ The core logic references [GitToc](https://github.com/Holy-Shine/GitToc), welcom
 
 ### 1. Use online
 
-> [tocgenarator](https://toc.codepie.fun)
+> [https://toc.codepie.fun](https://toc.codepie.fun)
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfxuf9bsw1j31400mcad6.jpg)
 
