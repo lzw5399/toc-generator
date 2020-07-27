@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	uuid "github.com/satori/go.uuid"
 )
 
 var indentMap = map[int]int{
@@ -17,7 +18,7 @@ var indentMap = map[int]int{
 var arr = [5]int{0, 1, 2, 3, 4}
 
 func main() {
-	str := fmt.Sprintf("a:%v", "why")
+	u:=	uuid.NewV4().String()
 
-	fmt.Println(str)
+	fmt.Println(u)
 }

@@ -16,6 +16,7 @@ func InitRouter() *gin.Engine{
 	// route
 	r.GET("/", controllers.Index)
 	r.POST("/convert", controllers.Convert)
+	r.GET("/version", controllers.Version)
 
 	return r
 }

@@ -1,10 +1,15 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/satori/go.uuid"
 	"net/http"
+	"os"
 	"toc-generator/services"
 )
+
+var uid = uuid.NewV4().String()
 
 // Method: GET
 // Url: /
@@ -28,4 +33,18 @@ func Convert(c *gin.Context) {
 			Meta: nil,
 		})
 	}
+}
+
+// Method: GET
+// Url: /version
+func Version(c *gin.Context) {
+	buildNumber := os.Getenv("BUILD_NUMBER")
+	if buildNumber == "" {
+		buildNumber = "no build number available"
+	}
+
+	result := fmt.Sprintf("buildNumber: %s\r\n" +
+		"uuid: %s", buildNumber, uid)
+
+	c.String(http.StatusOK, result)
 }
