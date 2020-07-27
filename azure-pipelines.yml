@@ -51,14 +51,6 @@ stages:
           docker tag $(imageNameWithTag) $(repository):latest
           docker save $(repository):$(tag) -o $(appName)-$(tag)
 
-    - task: SSH@0
-      displayName: docker load
-      inputs:
-        sshEndpoint: 'aliyun_centos'
-        runOptions: 'inline'
-        inline: 'cd $(nodeImageTarLocation) && docker load -i $(appName)-$(tag)'
-        readyTimeout: '20000'
-
     - task: CopyFilesOverSSH@0
       displayName: copy image tar to node
       inputs:
@@ -67,7 +59,13 @@ stages:
         targetFolder: $(nodeImageTarLocation)
         readyTimeout: '20000'
 
-
+    - task: SSH@0
+      displayName: docker load
+      inputs:
+        sshEndpoint: 'aliyun_centos'
+        runOptions: 'inline'
+        inline: 'cd $(nodeImageTarLocation) && docker load -i $(appName)-$(tag)'
+        readyTimeout: '20000'
 
     - task: Docker@2
       displayName: push latest tagged image
