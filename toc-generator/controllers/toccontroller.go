@@ -9,17 +9,19 @@ import (
 	"strings"
 )
 
-// 处理get
+// Method: GET
+// Url: /
 func Index(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"title": "hello a lzw",
 	})
 }
 
-// 处理post
+// Method: POST
+// Url: /convert
 func Convert(c *gin.Context) {
 	var content string
-	if c.Bind(&content) == nil {
+	if err := c.Bind(&content); err == nil {
 		result := handleContent(content)
 		c.PureJSON(http.StatusOK, result)
 	} else {
