@@ -20,6 +20,9 @@ variables:
 - name: serverChartLocation
   value: /root/helm-chart-folder/toc
 
+- name: nodeImageTarLocation
+  value: /root/image-stage
+
 stages:
 - stage: Build
   displayName: Build image
@@ -46,6 +49,25 @@ stages:
         targetType: 'inline'
         script: |
           docker tag $(imageNameWithTag) $(repository):latest
+          docker save $(repository):$(tag) -o $(appName)-$(tag)
+
+    - task: SSH@0
+      displayName: docker load
+      inputs:
+        sshEndpoint: 'aliyun_centos'
+        runOptions: 'inline'
+        inline: 'cd $(nodeImageTarLocation) && docker load -i $(appName)-$(tag)'
+        readyTimeout: '20000'
+
+    - task: CopyFilesOverSSH@0
+      displayName: copy image tar to node
+      inputs:
+        sshEndpoint: 'aliyun_centos'
+        contents: '$(appName)-$(tag).tar'
+        targetFolder: $(nodeImageTarLocation)
+        readyTimeout: '20000'
+
+
 
     - task: Docker@2
       displayName: push latest tagged image
