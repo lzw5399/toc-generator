@@ -60,7 +60,7 @@ stages:
       displayName: copy helm chart to server
       inputs:
         sshEndpoint: 'aliyun 47.102.201.58'
-        sourceFolder: 'kubernetes'
+        sourceFolder: 'chart'
         contents: '**'
         targetFolder: $(serverChartLocation)
         readyTimeout: '20000'
