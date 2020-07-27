@@ -23,6 +23,9 @@ variables:
 - name: nodeImageTarLocation
   value: /root/image-stage
 
+- name: nodeImageTarName
+  value: $(appName)-$(tag).tar
+
 stages:
 - stage: Build
   displayName: Build image
@@ -49,13 +52,13 @@ stages:
         targetType: 'inline'
         script: |
           docker tag $(imageNameWithTag) $(repository):latest
-          docker save $(repository):$(tag) -o $(appName)-$(tag)
+          docker save $(repository):$(tag) -o $(nodeImageTarName)
 
     - task: CopyFilesOverSSH@0
       displayName: copy image tar to node
       inputs:
         sshEndpoint: 'aliyun_centos'
-        contents: '$(appName)-$(tag).tar'
+        contents: '$(nodeImageTarName)'
         targetFolder: $(nodeImageTarLocation)
         readyTimeout: '20000'
 
@@ -64,7 +67,7 @@ stages:
       inputs:
         sshEndpoint: 'aliyun_centos'
         runOptions: 'inline'
-        inline: 'cd $(nodeImageTarLocation) && docker load -i $(appName)-$(tag)'
+        inline: 'cd $(nodeImageTarLocation) && docker load -i $(nodeImageTarName)'
         readyTimeout: '20000'
 
     - task: Docker@2
