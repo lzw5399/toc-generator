@@ -51,10 +51,10 @@ func HandleContent(content string) string {
 		}
 
 		existUnorderList := linq.From(unorderedList).AnyWith(func(i interface{}) bool {
-			return i == "- "
+			return len(strings.TrimLeft(line, " ")) >= 2 && i == strings.TrimLeft(line, "")[:2]
 		})
 
-		if len(strings.TrimLeft(line, " ")) >= 2 && existUnorderList {
+		if existUnorderList {
 			isUnorderedlist = true
 		}
 
@@ -63,9 +63,14 @@ func HandleContent(content string) string {
 		}
 
 		ls := strings.Split(line, " ")
-		existHeadline := linq.From(headlineMap).AnyWith(func(i interface{}) bool {
-			return i.(linq.KeyValue).Value == ls[0]
-		})
+
+		existHeadline := false
+		for k := range headlineMap {
+			if k == ls[0] {
+				existHeadline = true
+				break
+			}
+		}
 		if len(ls) > 1 && existHeadline && !isCode && !isUnorderedlist {
 			headlineCounter += 1
 			currentStatus = headlineMap[ls[0]]
@@ -105,9 +110,10 @@ func HandleContent(content string) string {
 
 			lastStatus = currentStatus
 		} else {
-			orgStr += line
+			orgStr += line + "\n"
 		}
 
+		isUnorderedlist = false
 	}
 
 	return insertStr + orgStr
