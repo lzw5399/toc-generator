@@ -51,7 +51,7 @@ func HandleContent(content string) string {
 		}
 
 		existUnorderList := linq.From(unorderedList).AnyWith(func(i interface{}) bool {
-			return len(strings.TrimLeft(line, " ")) >= 2 && i == strings.TrimLeft(line, "")[:2]
+			return len(strings.TrimLeft(line, " ")) >= 2 && i.(string) == strings.TrimLeft(line, " ")[:2]
 		})
 
 		if existUnorderList {
